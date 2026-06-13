@@ -1,764 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>for izma 🍰</title>
-  <meta name="description" content="for the girl who's miles away but never feels far" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #fdf8f2;
-      --warm: #fef3e2;
-      --peach: #fde8d0;
-      --blush: #fadadd;
-      --mint: #d8f0e8;
-      --lilac: #ede0f5;
-      --dusty: #e8d5e0;
-      --text-main: #4a3f3f;
-      --text-soft: #7a6b6b;
-      --text-muted: #a89898;
-      --accent-1: #e8927c;
-      --accent-2: #c9a0d4;
-      --accent-3: #7bbfa0;
-      --accent-4: #f0b87a;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--cream);
-      color: var(--text-main);
-      overflow-x: hidden;
-    }
-
-    /* ---- scrollbar ---- */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--cream); }
-    ::-webkit-scrollbar-thumb { background: var(--dusty); border-radius: 10px; }
-
-    /* ---- animated mesh bg ---- */
-    .mesh-bg {
-      background:
-        radial-gradient(ellipse at 20% 20%, #fde8d044 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 10%, #fadadd33 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, #ede0f533 0%, transparent 55%),
-        radial-gradient(ellipse at 10% 80%, #d8f0e822 0%, transparent 50%),
-        var(--cream);
-      background-size: 100% 100%;
-      animation: meshShift 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes meshShift {
-      0%   { filter: hue-rotate(0deg); }
-      50%  { filter: hue-rotate(8deg); }
-      100% { filter: hue-rotate(-5deg); }
-    }
-
-    /* ---- floating elements ---- */
-    .floaters { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-
-    .float-el {
-      position: absolute;
-      opacity: 0;
-      animation: floatDrift linear forwards;
-      font-size: 1.1rem;
-      user-select: none;
-    }
-
-    @keyframes floatDrift {
-      0%   { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.6); }
-      12%  { opacity: 0.55; }
-      80%  { opacity: 0.3; }
-      100% { opacity: 0; transform: translateY(-85vh) rotate(25deg) scale(0.8); }
-    }
-
-    /* ---- sections ---- */
-    section { position: relative; z-index: 10; }
-
-    /* ===================== LANDING ===================== */
-    #landing {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem 1.5rem 4rem;
-      gap: 0;
-    }
-
-    .landing-distance {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-3);
-      background: var(--mint);
-      padding: 0.35rem 1.1rem;
-      border-radius: 999px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: riseIn 0.9s ease 0.3s forwards;
-    }
-
-    .landing-emoji {
-      font-size: 4.5rem;
-      margin-bottom: 1.5rem;
-      display: block;
-      animation: riseIn 0.8s ease 0.5s both, pulse 4s ease-in-out 1.4s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(253, 232, 208, 0.3)); }
-      50%       { transform: scale(1.07); filter: drop-shadow(0 0 18px rgba(253, 232, 208, 0.8)); }
-    }
-
-    .landing-title {
-      font-family: 'Caveat', cursive;
-      font-size: clamp(3rem, 9vw, 5.5rem);
-      font-weight: 600;
-      color: var(--accent-1);
-      line-height: 1.15;
-      margin-bottom: 0.9rem;
-      opacity: 0;
-      animation: riseIn 0.9s ease 0.7s forwards;
-    }
-
-    .landing-sub {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
-      color: var(--text-soft);
-      max-width: 380px;
-      line-height: 1.7;
-      margin-bottom: 0.6rem;
-      opacity: 0;
-      animation: riseIn 0.9s ease 0.9s forwards;
-    }
-
-    .landing-tiny {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: riseIn 0.8s ease 1.1s forwards;
-    }
-
-    .main-btn {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      padding: 0.9rem 2.2rem;
-      border-radius: 999px;
-      border: 1.5px solid rgba(232, 146, 124, 0.3);
-      background: rgba(253, 232, 208, 0.55);
-      color: #c0664a;
-      cursor: pointer;
-      letter-spacing: 0.02em;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      opacity: 0;
-      animation: riseIn 0.8s ease 1.3s forwards;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .main-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.35), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .main-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(232, 146, 124, 0.25);
-      background: rgba(253, 232, 208, 0.75);
-    }
-
-    .main-btn:hover::before { opacity: 1; }
-    .main-btn:active { transform: translateY(-1px); }
-
-    .scroll-hint {
-      margin-top: 3rem;
-      color: var(--text-muted);
-      opacity: 0;
-      animation: riseIn 0.6s ease 1.6s forwards, bob 2.5s ease-in-out 2.2s infinite;
-    }
-
-    @keyframes bob {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(7px); }
-    }
-
-    @keyframes riseIn {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===================== LETTER ===================== */
-    #letter-section {
-      padding: 0 1.2rem 3rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .letter-wrap {
-      max-width: 580px;
-      width: 100%;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 1.5s cubic-bezier(0.4,0,0.2,1), opacity 0.9s ease 0.4s, padding 0.6s ease;
-    }
-
-    .letter-wrap.open {
-      max-height: 1600px;
-      opacity: 1;
-      padding-top: 0.5rem;
-      padding-bottom: 1rem;
-    }
-
-    .letter-card {
-      background: rgba(255, 255, 255, 0.58);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(232, 213, 224, 0.4);
-      border-radius: 2rem;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 4px 30px rgba(200, 160, 212, 0.08);
-    }
-
-    .letter-heading {
-      font-family: 'Caveat', cursive;
-      font-size: 1.8rem;
-      color: var(--accent-1);
-      margin-bottom: 1.3rem;
-    }
-
-    .letter-p {
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: var(--text-soft);
-      margin-bottom: 1.1rem;
-    }
-
-    .letter-p em {
-      font-style: italic;
-      color: var(--text-main);
-    }
-
-    .letter-sign {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-top: 1.5rem;
-    }
-
-    .letter-note {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 1.2rem;
-      letter-spacing: 0.04em;
-    }
-
-    /* yap toggle */
-    .yap-toggle {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      color: var(--accent-2);
-      cursor: pointer;
-      padding-top: 1.2rem;
-      border-top: 1px solid rgba(232, 213, 224, 0.3);
-      margin-top: 1.5rem;
-      transition: color 0.25s ease;
-      user-select: none;
-    }
-    .yap-toggle:hover { color: var(--accent-1); text-decoration: underline wavy; text-underline-offset: 3px; }
-
-    .yap-box {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.6s ease, opacity 0.45s ease 0.12s, margin 0.4s ease;
-      margin-top: 0;
-    }
-    .yap-box.open {
-      max-height: 200px;
-      opacity: 1;
-      margin-top: 0.9rem;
-    }
-
-    .yap-bubble {
-      background: rgba(237, 224, 245, 0.35);
-      border-radius: 1rem;
-      padding: 0.9rem 1.2rem;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
-      color: var(--text-soft);
-      line-height: 1.65;
-    }
-
-    .yap-bubble span {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-style: italic;
-      margin-top: 0.4rem;
-    }
-
-    /* ===================== REASONS ===================== */
-    #reasons {
-      padding: 5rem 1.5rem;
-    }
-
-    .section-heading {
-      font-family: 'Caveat', cursive;
-      font-size: clamp(2.2rem, 7vw, 3.5rem);
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-sub {
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 3rem;
-      font-weight: 500;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.1rem;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .r-card {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(232, 213, 224, 0.35);
-      box-shadow: 0 2px 16px rgba(200, 160, 212, 0.06);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s ease;
-    }
-
-    .r-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .r-card:hover {
-      transform: translateY(-5px) rotate(-0.4deg);
-      box-shadow: 0 10px 28px rgba(200, 160, 212, 0.18);
-    }
-
-    .r-card .icon { font-size: 1.7rem; margin-bottom: 0.7rem; display: block; }
-
-    .r-card p {
-      font-family: 'Lora', serif;
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: var(--text-soft);
-    }
-
-    .r-card.wide { grid-column: 1 / -1; text-align: center; }
-
-    /* ===================== COMFORT ===================== */
-    #comfort {
-      padding: 5rem 1.5rem;
-    }
-
-    .comfort-inner {
-      max-width: 440px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .comfort-btn {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 0.9rem 2rem;
-      border-radius: 999px;
-      border: 1.5px solid rgba(201, 160, 212, 0.35);
-      background: rgba(237, 224, 245, 0.45);
-      color: #9060a8;
-      cursor: pointer;
-      letter-spacing: 0.02em;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
-      margin-bottom: 2rem;
-    }
-
-    .comfort-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(201, 160, 212, 0.25);
-      background: rgba(237, 224, 245, 0.65);
-    }
-
-    .comfort-msg-area {
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .c-msg {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(232, 213, 224, 0.4);
-      border-radius: 1.4rem;
-      padding: 1.1rem 1.5rem;
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 0.93rem;
-      color: var(--text-soft);
-      line-height: 1.7;
-      animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.85) translateY(10px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    /* ===================== FOOTER ===================== */
-    #footer-section {
-      padding: 4rem 1.5rem 6rem;
-    }
-
-    .footer-inner {
-      max-width: 480px;
-      margin: 0 auto;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .footer-inner.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .footer-divider {
-      width: 50px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--dusty), transparent);
-      margin: 0 auto 2.5rem;
-    }
-
-    .footer-heading {
-      font-family: 'Caveat', cursive;
-      font-size: 2.2rem;
-      color: var(--text-soft);
-      margin-bottom: 1.2rem;
-    }
-
-    .footer-p {
-      font-family: 'Lora', serif;
-      font-size: 0.93rem;
-      line-height: 1.9;
-      color: var(--text-soft);
-      margin-bottom: 0.9rem;
-    }
-
-    .footer-credit {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      margin-top: 2rem;
-    }
-
-    /* fade-up utility */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity 0.85s ease, transform 0.85s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* distance tag strip at landing */
-    .ping-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--accent-3);
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 5px;
-      vertical-align: middle;
-      animation: pingAnim 2s ease-in-out infinite;
-    }
-    @keyframes pingAnim {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fdf6f0;--warm:#fff0e6;--blush:#ffe4ef;--lilac:#f0e8ff;--mint:#e2f8f0;
+  --peach:#ffd8c0;--sky:#e0f0ff;
+  --t1:#3d2e2e;--t2:#7a5f5f;--t3:#b89898;
+  --a1:#e8637c;--a2:#c97bd4;--a3:#6dbe9e;--a4:#f5a55a;--a5:#7baeed;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Georgia',serif;background:var(--cream);color:var(--t1);overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#f0d8e0;border-radius:10px}
+
+/* ---- animated bg ---- */
+.bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;opacity:0.18;animation:orbFloat ease-in-out infinite alternate}
+@keyframes orbFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(var(--dx),var(--dy)) scale(var(--ds))}}
+
+/* ---- stars ---- */
+.star{position:absolute;width:3px;height:3px;background:#ffd0e0;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.15;transform:scale(0.6)}100%{opacity:0.9;transform:scale(1.3)}}
+
+/* ---- floaters ---- */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.float-el{position:absolute;opacity:0;animation:floatUp linear forwards;user-select:none;pointer-events:none}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.5)}15%{opacity:0.7}85%{opacity:0.3}100%{opacity:0;transform:translateY(-90vh) rotate(30deg) scale(0.9)}}
+
+/* ---- sections ---- */
+section{position:relative;z-index:10}
+
+/* =================== LANDING =================== */
+#landing{
+  min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:2rem 1.5rem 5rem;gap:0;
+}
+.badge{
+  font-family:'Arial',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--a3);background:var(--mint);padding:0.35rem 1.2rem;border-radius:999px;
+  margin-bottom:2.2rem;opacity:0;animation:riseIn 0.8s ease 0.2s forwards;
+  display:flex;align-items:center;gap:6px;
+}
+.ping{width:7px;height:7px;background:var(--a3);border-radius:50%;animation:ping 2.2s ease-in-out infinite}
+@keyframes ping{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.6)}}
+
+.crown{font-size:4rem;margin-bottom:1.2rem;display:block;animation:riseIn 0.8s ease 0.4s both,crownPulse 4s ease-in-out 1.3s infinite}
+@keyframes crownPulse{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.1) rotate(2deg)}}
+
+.landing-title{
+  font-family:'Georgia',serif;font-style:italic;font-size:clamp(3.2rem,10vw,6rem);
+  color:var(--a1);line-height:1.1;margin-bottom:1rem;
+  opacity:0;animation:riseIn 0.9s ease 0.6s forwards;
+  text-shadow:0 2px 30px rgba(232,99,124,0.12);
+}
+.landing-sub{
+  font-family:'Georgia',serif;font-style:italic;font-size:clamp(0.95rem,2.5vw,1.15rem);
+  color:var(--t2);max-width:380px;line-height:1.8;margin-bottom:0.6rem;
+  opacity:0;animation:riseIn 0.9s ease 0.85s forwards;
+}
+.landing-tiny{font-family:'Arial',sans-serif;font-size:0.82rem;color:var(--t3);margin-bottom:2.8rem;opacity:0;animation:riseIn 0.8s ease 1.05s forwards}
+
+.open-btn{
+  font-family:'Arial',sans-serif;font-weight:700;font-size:0.9rem;
+  padding:1rem 2.4rem;border-radius:999px;
+  border:1.5px solid rgba(232,99,124,0.3);
+  background:rgba(255,228,239,0.5);color:#c04060;
+  cursor:pointer;letter-spacing:0.02em;transition:all 0.3s ease;
+  opacity:0;animation:riseIn 0.8s ease 1.25s forwards;
+  backdrop-filter:blur(8px);position:relative;overflow:hidden;
+}
+.open-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(232,99,124,0.2);background:rgba(255,228,239,0.75)}
+.open-btn:active{transform:translateY(-1px)}
+
+.scroll-arrow{margin-top:3.2rem;color:var(--t3);opacity:0;animation:riseIn 0.6s ease 1.5s forwards,bob 2.5s ease-in-out 2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* =================== LETTER =================== */
+#letter-section{padding:0 1.2rem 3rem;display:flex;justify-content:center}
+.letter-wrap{max-width:600px;width:100%;max-height:0;overflow:hidden;opacity:0;transition:max-height 1.6s cubic-bezier(0.4,0,0.2,1),opacity 0.9s ease 0.3s,padding 0.5s ease}
+.letter-wrap.open{max-height:2000px;opacity:1;padding-top:1rem;padding-bottom:1rem}
+
+.letter-card{
+  background:rgba(255,255,255,0.62);backdrop-filter:blur(16px);
+  border:1px solid rgba(240,220,230,0.45);border-radius:2rem;
+  padding:2.8rem 2.2rem;box-shadow:0 6px 40px rgba(200,120,160,0.07);
+}
+
+/* decorative top border */
+.letter-card::before{
+  content:'';display:block;width:60px;height:3px;border-radius:999px;
+  background:linear-gradient(to right,#f5a0b8,#c97bd4);margin:0 auto 2rem;
+}
+
+.letter-head{
+  font-family:'Georgia',serif;font-style:italic;font-size:1.85rem;
+  color:var(--a1);margin-bottom:1.5rem;text-align:center;
+}
+.letter-p{font-family:'Georgia',serif;font-size:0.95rem;line-height:1.9;color:var(--t2);margin-bottom:1.15rem}
+.letter-p em{font-style:italic;color:var(--t1);font-weight:bold}
+.letter-sign{font-family:'Georgia',serif;font-style:italic;font-size:0.9rem;color:var(--t3);margin-top:1.8rem;text-align:right}
+.letter-note{font-family:'Arial',sans-serif;font-size:0.75rem;color:var(--t3);margin-top:1rem;letter-spacing:0.04em;text-align:center}
+
+/* hearts deco */
+.deco-hearts{text-align:center;margin:1.5rem 0;font-size:1.2rem;letter-spacing:0.4rem;opacity:0.5}
+
+/* =================== STARS SECTION =================== */
+#stars-section{padding:5rem 1.5rem}
+.sec-head{font-family:'Georgia',serif;font-style:italic;font-size:clamp(2.2rem,7vw,3.5rem);text-align:center;margin-bottom:0.5rem}
+.sec-sub{text-align:center;font-family:'Arial',sans-serif;font-size:0.8rem;color:var(--t3);margin-bottom:3rem;letter-spacing:0.05em;text-transform:uppercase}
+
+.stars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;max-width:740px;margin:0 auto}
+
+.s-card{
+  background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);
+  border-radius:1.6rem;padding:1.6rem;border:1px solid rgba(230,210,220,0.35);
+  box-shadow:0 2px 18px rgba(200,130,160,0.05);
+  opacity:0;transform:translateY(32px);transition:opacity 0.75s ease,transform 0.75s ease,box-shadow 0.3s ease;
+}
+.s-card.visible{opacity:1;transform:translateY(0)}
+.s-card:hover{transform:translateY(-5px) rotate(-0.3deg);box-shadow:0 12px 32px rgba(200,130,160,0.16)}
+.s-card .icon{font-size:1.8rem;margin-bottom:0.75rem;display:block}
+.s-card p{font-family:'Georgia',serif;font-size:0.9rem;line-height:1.8;color:var(--t2)}
+.s-card.full{grid-column:1/-1;text-align:center}
+.s-card.full p{max-width:500px;margin:0 auto}
+
+/* =================== QUOTE =================== */
+#quote-section{padding:4rem 1.5rem}
+.quote-inner{max-width:540px;margin:0 auto;text-align:center}
+.quote-box{
+  background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);
+  border-radius:1.8rem;padding:2.2rem 2rem;
+  border:1px solid rgba(200,160,200,0.3);
+  position:relative;
+}
+.quote-box::before{content:'\201C';font-family:'Georgia',serif;font-size:6rem;color:rgba(232,99,124,0.12);position:absolute;top:-10px;left:16px;line-height:1;pointer-events:none}
+.q-text{font-family:'Georgia',serif;font-style:italic;font-size:1.05rem;line-height:1.85;color:var(--t2);position:relative;z-index:1}
+.q-attr{font-family:'Arial',sans-serif;font-size:0.78rem;color:var(--t3);margin-top:1rem;letter-spacing:0.05em}
+
+/* =================== COMFORT =================== */
+#comfort-section{padding:5rem 1.5rem}
+.comfort-inner{max-width:440px;margin:0 auto;text-align:center}
+.comfort-btn{
+  font-family:'Arial',sans-serif;font-weight:700;font-size:0.88rem;
+  padding:1rem 2.2rem;border-radius:999px;
+  border:1.5px solid rgba(201,123,212,0.35);background:rgba(240,232,255,0.5);color:#8840b0;
+  cursor:pointer;transition:all 0.3s ease;backdrop-filter:blur(8px);margin-bottom:2rem;
+  display:block;width:fit-content;margin-left:auto;margin-right:auto;
+}
+.comfort-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(201,123,212,0.22);background:rgba(240,232,255,0.7)}
+.comfort-area{min-height:90px;display:flex;align-items:center;justify-content:center}
+.c-msg{
+  background:rgba(255,255,255,0.65);backdrop-filter:blur(10px);
+  border:1px solid rgba(230,210,225,0.4);border-radius:1.5rem;
+  padding:1.2rem 1.6rem;font-family:'Georgia',serif;font-style:italic;
+  font-size:0.95rem;color:var(--t2);line-height:1.75;
+  animation:popIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+}
+@keyframes popIn{from{opacity:0;transform:scale(0.82) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* =================== FOOTER =================== */
+#footer-section{padding:5rem 1.5rem 7rem}
+.footer-inner{max-width:480px;margin:0 auto;text-align:center;opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease}
+.footer-inner.visible{opacity:1;transform:translateY(0)}
+.divider{width:50px;height:1.5px;background:linear-gradient(to right,transparent,#f0c8d8,transparent);margin:0 auto 2.5rem}
+.footer-head{font-family:'Georgia',serif;font-style:italic;font-size:2.2rem;color:var(--t2);margin-bottom:1.3rem}
+.footer-p{font-family:'Georgia',serif;font-size:0.95rem;line-height:1.9;color:var(--t2);margin-bottom:1rem}
+.footer-p em{font-style:italic;color:var(--t1)}
+.footer-credit{font-family:'Arial',sans-serif;font-size:0.74rem;color:var(--t3);letter-spacing:0.06em;margin-top:2rem}
+
+/* ---- utilities ---- */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.85s ease,transform 0.85s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ---- beautiful ornament line ---- */
+.ornament{text-align:center;font-size:1.1rem;letter-spacing:0.6rem;color:var(--t3);opacity:0.4;margin:0.5rem 0}
+</style>
 </head>
+<body>
 
-<body class="mesh-bg">
+<!-- animated bg orbs -->
+<div class="bg-wrap" id="bgWrap"></div>
 
-  <div class="floaters" id="floaters"></div>
+<!-- floating emojis -->
+<div class="floaters" id="floaters"></div>
 
-  <!-- =================== LANDING =================== -->
-  <section id="landing">
-    <div class="landing-distance"><span class="ping-dot"></span>online · miles away · always close</div>
+<!-- ============ LANDING ============ -->
+<section id="landing">
+  <div class="badge"><span class="ping"></span>online · far away · always in your corner</div>
 
-    <span class="landing-emoji">🍰</span>
+  <span class="crown">👑</span>
 
-    <h1 class="landing-title">hey Izma…</h1>
+  <h1 class="landing-title">hey Noor…</h1>
 
-    <p class="landing-sub">
-      i made this because some things are too big for a text<br/>and too real to not say out loud
+  <p class="landing-sub">
+    i built this because some things are too important<br/>to fit inside a message
+  </p>
+
+  <p class="landing-tiny">this whole thing is just for you 🌸</p>
+
+  <button class="open-btn" id="openBtn">open when you need to feel loved ✨</button>
+
+  <div class="scroll-arrow">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ LETTER ============ -->
+<section id="letter-section">
+  <div class="letter-wrap" id="letterWrap">
+    <div class="letter-card">
+
+      <p class="letter-head">a letter that's been sitting in my heart…</p>
+
+      <p class="letter-p">
+        okay so i've been thinking about how to say this properly, and the truth is — there's no clean way to say it, so i'll just say it plainly: <em>you matter to me. a lot. more than i probably say out loud.</em> and i think you deserve to hear that in full, properly, in a way that's more than just a quick message between everything else.
+      </p>
+
+      <p class="letter-p">
+        the distance is real — i know that. you're far, and sometimes that gap between us feels loud. but here's the thing about you, Noor: you make the distance feel like nothing. genuinely nothing. you're the kind of person i could be continents away from and still feel like you're right here. not everyone does that. you do.
+      </p>
+
+      <p class="letter-p">
+        i think about the things you've carried — quietly, on your own, without making noise about it. you've been through heavy things and you still show up soft. still kind. still you. that takes so much more than people realize. and i want you to know, i noticed. even across the miles, i noticed. and i was rooting for you every single time.
+      </p>
+
+      <p class="letter-p">
+        you are someone's <em>favourite person</em>. not as a compliment thrown around, but the real kind — the "i light up a little when i see your name" kind. the "i genuinely want good things for you" kind. that's how you feel to me, and i don't think i've said it enough.
+      </p>
+
+      <p class="letter-p">
+        so here it is, officially: you are cared for. you are thought about. you are loved — across whatever timezone, whatever distance, whatever the world throws between us. none of that changes anything.
+      </p>
+
+      <p class="letter-p">
+        you're my princess and that's final and i will not be taking questions. 💛
+      </p>
+
+      <div class="deco-hearts">♡ ♡ ♡</div>
+
+      <p class="letter-sign">— from the one who's genuinely so glad you're in their life</p>
+      <p class="letter-note">(take all the time you need with this. no rush.)</p>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STARS ============ -->
+<section id="stars-section">
+  <h2 class="sec-head fade-up" style="color:var(--a2)">reasons you're wonderful</h2>
+  <p class="sec-sub fade-up">a non-exhaustive list — we would be here for a long time otherwise</p>
+
+  <div class="stars-grid">
+    <div class="s-card">
+      <span class="icon">👑</span>
+      <p>you carry a quiet kind of royalty about you — not the loud kind, but the kind that makes people feel safe around you. that's rarer than any crown.</p>
+    </div>
+
+    <div class="s-card">
+      <span class="icon">🌸</span>
+      <p>the way you stayed kind through hard things — that's not weakness, that's an enormous amount of strength. you came out the other side still soft. i love that about you.</p>
+    </div>
+
+    <div class="s-card">
+      <span class="icon">✨</span>
+      <p>you make people feel seen when you talk to them. not everyone has that. you do, naturally, without even trying. it's a beautiful thing.</p>
+    </div>
+
+    <div class="s-card">
+      <span class="icon">🌙</span>
+      <p>you're the kind of friend who stays. not just when it's fun and easy — properly stays. that is everything. i don't take it lightly.</p>
+    </div>
+
+    <div class="s-card">
+      <span class="icon">💌</span>
+      <p>even from far away, you make people feel close. that's a superpower. it's genuinely rare and it's one of my favourite things about you.</p>
+    </div>
+
+    <div class="s-card">
+      <span class="icon">🌿</span>
+      <p>the way you love the people you love — completely and quietly and without making it a performance — that's exactly the kind of person i want in my corner.</p>
+    </div>
+
+    <div class="s-card full">
+      <span class="icon">💛</span>
+      <p>the miles between us have never made you feel far. <em>that's who you are</em> — the kind of person distance can't dim. and i'm not letting that go.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE ============ -->
+<section id="quote-section">
+  <div class="quote-inner fade-up">
+    <div class="quote-box">
+      <p class="q-text">
+        you don't have to be okay all the time. you don't have to be strong all the time. you've already been so strong, for so long. some days it's enough to just be here — and you being here is enough.
+      </p>
+      <p class="q-attr">— something i mean with my whole heart</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMFORT ============ -->
+<section id="comfort-section">
+  <div class="comfort-inner">
+    <h2 class="sec-head fade-up" style="color:var(--a1)">for the heavy days</h2>
+    <p class="sec-sub fade-up">tap this whenever things feel too much. i mean it.</p>
+
+    <button class="comfort-btn fade-up" id="comfortBtn">tap when you need a reminder 🤍</button>
+    <div class="comfort-area" id="comfortArea"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<section id="footer-section">
+  <div class="footer-inner" id="footerInner">
+    <div class="divider"></div>
+    <p class="footer-head">one last thing, Noor</p>
+    <p class="footer-p">
+      you've carried quiet things alone that you really didn't have to carry alone.
+      the heavy stuff, the uncertain stuff, the stuff you smile through —
+      i see it. i've always seen it.
     </p>
+    <p class="footer-p">
+      you don't owe anyone a perfect version of yourself.
+      not today, not on the hard days, <em>not ever.</em>
+    </p>
+    <p class="footer-p">
+      i'm here — properly, fully here — across every mile, every timezone, every moment.
+      that part doesn't change. it just doesn't.
+    </p>
+    <p class="footer-p" style="font-style:italic;color:var(--a1)">
+      you're cared for. you're loved. you're my princess. 💛
+    </p>
+    <div class="ornament">✦ ✦ ✦</div>
+    <p class="footer-credit">— made with real feelings, zero regrets</p>
+  </div>
+</section>
 
-    <p class="landing-tiny">this one's all for you 🌿</p>
+<script>
+// ---- comfort messages ----
+const msgs=[
+  "you are so cared for. even from miles away. especially from miles away.",
+  "the distance is real but so is every single bit of what i feel for you.",
+  "you don't have to hold everything alone. i'm here. i'm properly here.",
+  "you are someone's favourite person. not a metaphor. actually true.",
+  "on the days things feel heavy — you're allowed to feel that. and you're still loved through it.",
+  "you showed up soft through hard things. that took so much. i see it.",
+  "one day the distance will close and it'll be the best day. until then — i'm still here.",
+  "you make being far away feel like nothing. that's not nothing. that's everything.",
+  "you are my princess and that's final 👑 no debates.",
+  "just you existing is enough. you don't have to do anything extra to deserve good things.",
+];
+let lastIdx=-1;
 
-    <button class="main-btn" id="openBtn">open when you need a reminder ☀️</button>
+// ---- stars bg ----
+const bgWrap=document.getElementById('bgWrap');
+const orbData=[
+  {x:'15%',y:'12%',size:'380px',color:'#ffe4ef',dx:'20px',dy:'25px',ds:'1.08',dur:'18s'},
+  {x:'75%',y:'8%',size:'320px',color:'#f0e8ff',dx:'-18px',dy:'20px',ds:'0.94',dur:'22s'},
+  {x:'65%',y:'72%',size:'420px',color:'#e0f0ff',dx:'-22px',dy:'-18px',ds:'1.06',dur:'20s'},
+  {x:'5%',y:'70%',size:'300px',color:'#e2f8f0',dx:'15px',dy:'-20px',ds:'0.96',dur:'16s'},
+  {x:'45%',y:'45%',size:'260px',color:'#fff0e6',dx:'10px',dy:'12px',ds:'1.04',dur:'25s'},
+];
+orbData.forEach(o=>{
+  const el=document.createElement('div');
+  el.className='bg-orb';
+  Object.assign(el.style,{left:o.x,top:o.y,width:o.size,height:o.size,background:o.color,'--dx':o.dx,'--dy':o.dy,'--ds':o.ds,animationDuration:o.dur,animationDelay:`-${Math.random()*10}s`});
+  bgWrap.appendChild(el);
+});
 
-    <div class="scroll-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </div>
-  </section>
+// ---- stars ----
+for(let i=0;i<55;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const sz=1+Math.random()*2.5;
+  Object.assign(s.style,{
+    left:Math.random()*100+'%',top:Math.random()*100+'%',
+    width:sz+'px',height:sz+'px',
+    background:['#ffd0e0','#e0c8ff','#c8e8ff','#c8f0e0','#ffe0b0'][Math.floor(Math.random()*5)],
+    animationDuration:(1.5+Math.random()*3)+'s',animationDelay:Math.random()*4+'s',
+    position:'fixed',zIndex:1,pointerEvents:'none',borderRadius:'50%',
+  });
+  document.body.appendChild(s);
+}
 
-  <!-- =================== LETTER =================== -->
-  <section id="letter-section">
-    <div class="letter-wrap" id="letterWrap">
-      <div class="letter-card">
-        <p class="letter-heading">okay so listen…</p>
+// ---- floaters ----
+const emojis=['💛','🌸','👑','✨','💌','🌿','🤍','💗','🌙','🫶','⭐','🌺'];
+const fc=document.getElementById('floaters');
 
-        <p class="letter-p">
-          there's this weird thing about having someone online — the distance is real, like genuinely real, we can't just grab biryani together whenever or call each other over for no reason. and still, somehow, <em>you've felt closer than a lot of people who are right here.</em> that's not nothing. that's actually everything.
-        </p>
+function spawnFloat(burst=false){
+  const el=document.createElement('span');
+  el.className='float-el';
+  el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  el.style.left=(burst?window.innerWidth/2+(Math.random()-0.5)*300:Math.random()*window.innerWidth)+'px';
+  el.style.bottom=burst?'28%':'-20px';
+  el.style.fontSize=(0.8+Math.random()*1.1)+'rem';
+  const dur=5+Math.random()*5;
+  el.style.animationDuration=dur+'s';
+  fc.appendChild(el);
+  setTimeout(()=>el.remove(),dur*1000);
+}
 
-        <p class="letter-p">
-          i think about the times you've gone through things and you didn't say much — just carried it, like you were trying to make sure no one else felt the weight of it. i noticed. you fought through stuff alone that you really didn't have to fight alone. and i get it, sometimes words don't come easy, or you don't want to be a "burden" (you're not, you never were). but i want you to know — i was there, even when i didn't know the full picture. i was rooting for you the whole time.
-        </p>
+function burst(n){for(let i=0;i<n;i++)setTimeout(()=>spawnFloat(true),i*120)}
+setInterval(()=>spawnFloat(),2800);
 
-        <p class="letter-p">
-          i love that your brain never stays in one place for too long. one second we're talking about nothing and then suddenly you're three topics deep and i'm genuinely invested somehow? like yes, continue, tell me more about your thing. the yapping is a feature, not a bug — i hope you know that. please never stop.
-        </p>
+// ---- open letter ----
+document.getElementById('openBtn').addEventListener('click',()=>{
+  const w=document.getElementById('letterWrap');
+  w.classList.add('open');
+  setTimeout(()=>w.scrollIntoView({behavior:'smooth',block:'center'}),250);
+  burst(12);
+});
 
-        <p class="letter-p">
-          and the fact that there's a whole distance between us and you still feel like the kind of person i'd want on my side during literally anything — that says a lot about who you are. not everyone feels that way across a screen. you do.
-        </p>
+// ---- comfort ----
+document.getElementById('comfortBtn').addEventListener('click',()=>{
+  let idx;
+  do{idx=Math.floor(Math.random()*msgs.length)}while(idx===lastIdx&&msgs.length>1);
+  lastIdx=idx;
+  document.getElementById('comfortArea').innerHTML=`<div class="c-msg">"${msgs[idx]}"</div>`;
+  burst(6);
+});
 
-        <p class="letter-p">
-          this was just me saying: i see you. the real version, not just the doing-okay version.
-        </p>
+// ---- scroll observer ----
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
 
-        <p class="letter-sign">— from your friend who's genuinely glad you exist 💛</p>
-
-        <p class="letter-note">(take your time with this. no rush.)</p>
-
-        <div class="yap-toggle" id="yapToggle">▸ play a classic Izma yap moment</div>
-        <div class="yap-box" id="yapBox">
-          <div class="yap-bubble">
-            "okay okay okay wait, sun na — so basically—"
-            <span>*goes on for 15 mins, covers 6 unrelated topics, somehow lands at something that actually makes complete sense* 😭🫶</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =================== REASONS =================== -->
-  <section id="reasons">
-    <h2 class="section-heading fade-up" style="color: var(--accent-2);">reasons you matter</h2>
-    <p class="section-sub fade-up">(a non-exhaustive list, because we'd be here forever otherwise)</p>
-
-    <div class="cards-grid">
-
-      <div class="r-card">
-        <span class="icon">🏸</span>
-        <p>the way you talk about badminton — like, that kind of energy for something? that's not common. it says a lot about who you are. you show up with your whole chest for the things you love.</p>
-      </div>
-
-      <div class="r-card">
-        <span class="icon">🍰</span>
-        <p>ice cream cake is unironically one of the best taste decisions a human can make and your loyalty to it is something i deeply respect. no notes. full marks.</p>
-      </div>
-
-      <div class="r-card">
-        <span class="icon">🍛</span>
-        <p>the fact that biryani is a whole feeling for you and not just food — yeah, that's the right relationship to have with biryani. we're the same in the ways that matter.</p>
-      </div>
-
-      <div class="r-card">
-        <span class="icon">🫧</span>
-        <p>you listen like you actually care. not the "mmk, anyway—" kind. the kind where you actually absorb what someone's saying. people don't forget that about you.</p>
-      </div>
-
-      <div class="r-card">
-        <span class="icon">🌿</span>
-        <p>you fought through heavy things quietly, and you came out the other side still soft, still kind. that takes more strength than most people realize. i don't take that lightly.</p>
-      </div>
-
-      <div class="r-card">
-        <span class="icon">💬</span>
-        <p>your yaps are genuinely the highlight of a conversation. i mean this with full seriousness. don't let anyone make you feel like being expressive is too much. it's the right amount.</p>
-      </div>
-
-      <div class="r-card wide">
-        <span class="icon">✨</span>
-        <p>the miles between us are real but the friendship isn't any less. <em>you're one of those people who makes the distance feel small.</em> and that's rare and i'm not letting that go.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =================== COMFORT =================== -->
-  <section id="comfort">
-    <div class="comfort-inner">
-      <h2 class="section-heading fade-up" style="color: var(--accent-1);">for the heavy days</h2>
-      <p class="section-sub fade-up">tap it. as many times as you need. i mean it.</p>
-
-      <button class="comfort-btn fade-up" id="comfortBtn">tap when things feel heavy 🤍</button>
-
-      <div class="comfort-msg-area" id="comfortArea"></div>
-    </div>
-  </section>
-
-  <!-- =================== FOOTER =================== -->
-  <section id="footer-section">
-    <div class="footer-inner" id="footerInner">
-      <div class="footer-divider"></div>
-
-      <p class="footer-heading">tiny reminder</p>
-
-      <p class="footer-p">
-        the hard things you've been through — the ones you handled quietly, mostly alone —
-        they don't define how strong you have to keep being.
-        you've already been so strong.
-      </p>
-
-      <p class="footer-p">
-        you don't owe anyone a perfect version of yourself.
-        not today. not on the days things feel heavy.
-        <em>not ever.</em>
-      </p>
-
-      <p class="footer-p">
-        i'm here. not just when it's easy or fun. properly here.<br/>
-        across whatever distance, whatever timezone, whatever 💛
-      </p>
-
-      <p class="footer-credit">— made with actual feelings, no regrets</p>
-    </div>
-  </section>
-
-  <script>
-    // ---- comfort messages ----
-    const msgs = [
-      "you fought through hard things and you're still here. that's not small.",
-      "long distance just means your friendship doesn't need proximity to be real.",
-      "i genuinely miss your yapping right now. please yap at me.",
-      "the biryani, the ice cream cake, the badminton — even your taste in things is iconic.",
-      "you don't have to be okay right now. just be.",
-      "you carried heavy things alone for too long. you don't have to anymore.",
-      "miles don't change anything. i'm still here, properly here.",
-      "you're someone people are lucky to know. i include myself in that.",
-      "one day we're getting biryani together and it's going to be the best day.",
-      "the yapping is one of my favourite things about you. please never stop.",
-    ];
-
-    let lastIdx = -1;
-
-    // ---- open letter ----
-    document.getElementById('openBtn').addEventListener('click', () => {
-      const wrap = document.getElementById('letterWrap');
-      wrap.classList.add('open');
-      setTimeout(() => {
-        wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 250);
-      burst(10);
-    });
-
-    // ---- yap toggle ----
-    let yapOpen = false;
-    document.getElementById('yapToggle').addEventListener('click', () => {
-      yapOpen = !yapOpen;
-      document.getElementById('yapBox').classList.toggle('open', yapOpen);
-      document.getElementById('yapToggle').textContent = yapOpen
-        ? '▾ exactly, exactly like that 😭'
-        : '▸ play a classic Izma yap moment';
-    });
-
-    // ---- comfort button ----
-    document.getElementById('comfortBtn').addEventListener('click', () => {
-      let idx;
-      do { idx = Math.floor(Math.random() * msgs.length); }
-      while (idx === lastIdx && msgs.length > 1);
-      lastIdx = idx;
-
-      document.getElementById('comfortArea').innerHTML =
-        `<div class="c-msg">"${msgs[idx]}"</div>`;
-
-      burst(5);
-    });
-
-    // ---- floaters ----
-    const emojis = ['💛', '🍰', '🏸', '🍛', '🌿', '✨', '🫧', '🤍', '💗', '🫶'];
-    const fc = document.getElementById('floaters');
-
-    function spawnFloat(centerBurst = false) {
-      const el = document.createElement('span');
-      el.className = 'float-el';
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.left = (centerBurst
-        ? window.innerWidth / 2 + (Math.random() - 0.5) * 280
-        : Math.random() * window.innerWidth) + 'px';
-      el.style.bottom = centerBurst ? '30%' : '-20px';
-      el.style.fontSize = (0.75 + Math.random() * 0.9) + 'rem';
-      const dur = 5 + Math.random() * 5;
-      el.style.animationDuration = dur + 's';
-      fc.appendChild(el);
-      setTimeout(() => el.remove(), dur * 1000);
-    }
-
-    function burst(n) {
-      for (let i = 0; i < n; i++) setTimeout(() => spawnFloat(true), i * 130);
-    }
-
-    setInterval(() => spawnFloat(), 3000);
-
-    // ---- scroll observer ----
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.fade-up, .r-card, .footer-inner').forEach((el, i) => {
-      if (el.classList.contains('r-card')) el.style.transitionDelay = (i % 7 * 0.08) + 's';
-      io.observe(el);
-    });
-  </script>
+document.querySelectorAll('.fade-up,.s-card,.footer-inner').forEach((el,i)=>{
+  if(el.classList.contains('s-card'))el.style.transitionDelay=(i%7*0.09)+'s';
+  io.observe(el);
+});
+</script>
 </body>
 </html>
