@@ -6,434 +6,478 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cream:#fdf6f0;--warm:#fff0e6;--blush:#ffe4ef;--lilac:#f0e8ff;--mint:#e2f8f0;
-  --peach:#ffd8c0;--sky:#e0f0ff;
-  --t1:#3d2e2e;--t2:#7a5f5f;--t3:#b89898;
-  --a1:#e8637c;--a2:#c97bd4;--a3:#6dbe9e;--a4:#f5a55a;--a5:#7baeed;
+  --rose:#ffb3c1;--peach:#ffd6ba;--lav:#e8d5f5;--mint:#c8f0e0;--gold:#ffe08a;
+  --t1:#3a2a35;--t2:#7a5060;--t3:#b89aaa;
+  --a1:#e05070;--a2:#b86ac0;--a3:#5db890;--a4:#e8a030;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Georgia',serif;background:var(--cream);color:var(--t1);overflow-x:hidden;min-height:100vh}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:#f0d8e0;border-radius:10px}
+body{font-family:'Georgia',serif;background:linear-gradient(135deg,#fff5f8 0%,#fef0ff 50%,#f0fff8 100%);color:var(--t1);overflow-x:hidden;min-height:100vh}
 
-/* ---- animated bg ---- */
-.bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.bg-orb{position:absolute;border-radius:50%;opacity:0.18;animation:orbFloat ease-in-out infinite alternate}
-@keyframes orbFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(var(--dx),var(--dy)) scale(var(--ds))}}
+/* animated blobs */
+.bg-blob{position:fixed;border-radius:60% 40% 30% 70%/60% 30% 70% 40%;opacity:0.12;animation:morph 18s ease-in-out infinite alternate,drift linear infinite alternate;pointer-events:none;z-index:0}
+@keyframes morph{0%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}100%{border-radius:50% 50% 30% 70%/50% 70% 40% 60%}}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(var(--dx),var(--dy)) scale(var(--ds))}}
 
-/* ---- stars ---- */
-.star{position:absolute;width:3px;height:3px;background:#ffd0e0;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
-@keyframes twinkle{0%{opacity:0.15;transform:scale(0.6)}100%{opacity:0.9;transform:scale(1.3)}}
+/* sparkles */
+.sparkle{position:fixed;pointer-events:none;z-index:1;animation:twinkle ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.1;transform:scale(0.5) rotate(0deg)}100%{opacity:0.8;transform:scale(1.4) rotate(45deg)}}
 
-/* ---- floaters ---- */
+/* float particles */
 .floaters{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
-.float-el{position:absolute;opacity:0;animation:floatUp linear forwards;user-select:none;pointer-events:none}
-@keyframes floatUp{0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.5)}15%{opacity:0.7}85%{opacity:0.3}100%{opacity:0;transform:translateY(-90vh) rotate(30deg) scale(0.9)}}
+.float-el{position:absolute;opacity:0;animation:floatUp linear forwards}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) rotate(-10deg) scale(0.4)}15%{opacity:0.8}85%{opacity:0.3}100%{opacity:0;transform:translateY(-100vh) rotate(20deg) scale(1)}}
 
-/* ---- sections ---- */
 section{position:relative;z-index:10}
 
-/* =================== LANDING =================== */
-#landing{
+/* ===== HERO ===== */
+#hero{
   min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:2rem 1.5rem 5rem;gap:0;
+  text-align:center;padding:2rem 1.5rem 6rem;gap:0;
 }
-.badge{
-  font-family:'Arial',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--a3);background:var(--mint);padding:0.35rem 1.2rem;border-radius:999px;
-  margin-bottom:2.2rem;opacity:0;animation:riseIn 0.8s ease 0.2s forwards;
-  display:flex;align-items:center;gap:6px;
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  background:#fff0f8;color:#c0406a;border:1px solid rgba(224,80,112,0.2);border-radius:999px;padding:0.4rem 1.2rem;
+  margin-bottom:2.4rem;opacity:0;animation:slideUp 0.8s ease 0.1s both
 }
-.ping{width:7px;height:7px;background:var(--a3);border-radius:50%;animation:ping 2.2s ease-in-out infinite}
-@keyframes ping{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.6)}}
+.pulse-dot{width:7px;height:7px;background:#e05070;border-radius:50%;animation:pulseDot 2s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(0.5);opacity:0.3}}
 
-.crown{font-size:4rem;margin-bottom:1.2rem;display:block;animation:riseIn 0.8s ease 0.4s both,crownPulse 4s ease-in-out 1.3s infinite}
-@keyframes crownPulse{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.1) rotate(2deg)}}
+.big-emoji{font-size:4.5rem;display:block;margin-bottom:1rem;opacity:0;animation:slideUp 0.9s ease 0.3s both,floatEmoji 4s ease-in-out 1.3s infinite}
+@keyframes floatEmoji{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
 
-.landing-title{
-  font-family:'Georgia',serif;font-style:italic;font-size:clamp(3.2rem,10vw,6rem);
-  color:var(--a1);line-height:1.1;margin-bottom:1rem;
-  opacity:0;animation:riseIn 0.9s ease 0.6s forwards;
-  text-shadow:0 2px 30px rgba(232,99,124,0.12);
+.hero-title{
+  font-style:italic;font-size:clamp(2.8rem,9vw,5.5rem);
+  background:linear-gradient(135deg,#e05070,#b86ac0,#5db890);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:0.9rem;
+  opacity:0;animation:slideUp 0.9s ease 0.5s both
 }
-.landing-sub{
-  font-family:'Georgia',serif;font-style:italic;font-size:clamp(0.95rem,2.5vw,1.15rem);
-  color:var(--t2);max-width:380px;line-height:1.8;margin-bottom:0.6rem;
-  opacity:0;animation:riseIn 0.9s ease 0.85s forwards;
-}
-.landing-tiny{font-family:'Arial',sans-serif;font-size:0.82rem;color:var(--t3);margin-bottom:2.8rem;opacity:0;animation:riseIn 0.8s ease 1.05s forwards}
+.hero-name{display:block;font-size:clamp(3.5rem,11vw,7rem);letter-spacing:-0.02em}
 
-.open-btn{
-  font-family:'Arial',sans-serif;font-weight:700;font-size:0.9rem;
-  padding:1rem 2.4rem;border-radius:999px;
-  border:1.5px solid rgba(232,99,124,0.3);
-  background:rgba(255,228,239,0.5);color:#c04060;
-  cursor:pointer;letter-spacing:0.02em;transition:all 0.3s ease;
-  opacity:0;animation:riseIn 0.8s ease 1.25s forwards;
-  backdrop-filter:blur(8px);position:relative;overflow:hidden;
-}
-.open-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(232,99,124,0.2);background:rgba(255,228,239,0.75)}
-.open-btn:active{transform:translateY(-1px)}
+.hero-sub{font-style:italic;font-size:clamp(0.95rem,2.4vw,1.15rem);color:var(--t2);max-width:400px;line-height:1.9;margin-bottom:2.6rem;opacity:0;animation:slideUp 0.9s ease 0.75s both}
 
-.scroll-arrow{margin-top:3.2rem;color:var(--t3);opacity:0;animation:riseIn 0.6s ease 1.5s forwards,bob 2.5s ease-in-out 2s infinite}
+.btn-row{display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:slideUp 0.8s ease 0.95s both}
+.cta-btn{
+  font-family:sans-serif;font-weight:700;font-size:0.88rem;padding:0.9rem 2rem;border-radius:999px;
+  cursor:pointer;letter-spacing:0.02em;transition:all 0.3s ease;border:none;outline:none
+}
+.cta-primary{background:linear-gradient(135deg,#f08095,#c070c8);color:#fff;box-shadow:0 8px 24px rgba(224,80,112,0.25)}
+.cta-primary:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(224,80,112,0.35)}
+.cta-secondary{background:rgba(255,255,255,0.6);color:#a03060;border:1.5px solid rgba(224,80,112,0.25);backdrop-filter:blur(8px)}
+.cta-secondary:hover{transform:translateY(-3px);background:rgba(255,255,255,0.85)}
+
+.scroll-hint{margin-top:3rem;color:var(--t3);opacity:0;animation:slideUp 0.6s ease 1.2s both,bob 2.5s ease-in-out 1.8s infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-@keyframes riseIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-/* =================== LETTER =================== */
-#letter-section{padding:0 1.2rem 3rem;display:flex;justify-content:center}
-.letter-wrap{max-width:600px;width:100%;max-height:0;overflow:hidden;opacity:0;transition:max-height 1.6s cubic-bezier(0.4,0,0.2,1),opacity 0.9s ease 0.3s,padding 0.5s ease}
-.letter-wrap.open{max-height:2000px;opacity:1;padding-top:1rem;padding-bottom:1rem}
+/* ===== WELCOME CARD ===== */
+#welcome{padding:0 1.2rem 2rem;display:flex;justify-content:center}
+.welcome-wrap{max-width:620px;width:100%;max-height:0;overflow:hidden;opacity:0;transition:max-height 1.8s cubic-bezier(0.22,1,0.36,1),opacity 0.8s ease 0.2s,padding 0.5s ease}
+.welcome-wrap.open{max-height:2400px;opacity:1;padding:0.5rem 0}
 
-.letter-card{
-  background:rgba(255,255,255,0.62);backdrop-filter:blur(16px);
-  border:1px solid rgba(240,220,230,0.45);border-radius:2rem;
-  padding:2.8rem 2.2rem;box-shadow:0 6px 40px rgba(200,120,160,0.07);
+.card{
+  background:rgba(255,255,255,0.72);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,200,220,0.4);border-radius:2.2rem;
+  padding:3rem 2.4rem;box-shadow:0 8px 48px rgba(200,100,150,0.08),0 1px 0 rgba(255,255,255,0.9) inset
 }
+.card-accent{height:4px;width:70px;border-radius:999px;background:linear-gradient(90deg,#f08095,#c070c8,#5db890);margin:0 auto 2.4rem}
 
-/* decorative top border */
-.letter-card::before{
-  content:'';display:block;width:60px;height:3px;border-radius:999px;
-  background:linear-gradient(to right,#f5a0b8,#c97bd4);margin:0 auto 2rem;
-}
+.card-title{font-style:italic;font-size:1.9rem;text-align:center;margin-bottom:1.8rem;color:var(--a1)}
+.card-p{font-size:0.96rem;line-height:1.95;color:var(--t2);margin-bottom:1.1rem}
+.card-p em{font-style:italic;color:var(--t1);font-weight:bold}
+.card-sig{font-style:italic;font-size:0.9rem;color:var(--t3);margin-top:1.8rem;text-align:right}
+.hearts{text-align:center;margin:1.6rem 0;font-size:1.3rem;letter-spacing:0.45rem;opacity:0.5;animation:heartBeat 2.5s ease-in-out infinite}
+@keyframes heartBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}}
 
-.letter-head{
-  font-family:'Georgia',serif;font-style:italic;font-size:1.85rem;
-  color:var(--a1);margin-bottom:1.5rem;text-align:center;
-}
-.letter-p{font-family:'Georgia',serif;font-size:0.95rem;line-height:1.9;color:var(--t2);margin-bottom:1.15rem}
-.letter-p em{font-style:italic;color:var(--t1);font-weight:bold}
-.letter-sign{font-family:'Georgia',serif;font-style:italic;font-size:0.9rem;color:var(--t3);margin-top:1.8rem;text-align:right}
-.letter-note{font-family:'Arial',sans-serif;font-size:0.75rem;color:var(--t3);margin-top:1rem;letter-spacing:0.04em;text-align:center}
+/* ===== HEALING TIMELINE ===== */
+#timeline{padding:5rem 1.5rem}
+.sec-label{font-family:sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--a3);text-align:center;margin-bottom:0.5rem}
+.sec-title{font-style:italic;font-size:clamp(2rem,6vw,3.2rem);text-align:center;margin-bottom:3.5rem}
 
-/* hearts deco */
-.deco-hearts{text-align:center;margin:1.5rem 0;font-size:1.2rem;letter-spacing:0.4rem;opacity:0.5}
+.timeline-track{max-width:580px;margin:0 auto;position:relative;padding-left:2.5rem}
+.timeline-track::before{content:'';position:absolute;left:0.9rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#f08095 0%,#c070c8 50%,#5db890 100%);border-radius:999px}
+.t-item{position:relative;margin-bottom:2.4rem;opacity:0;transform:translateX(-20px);transition:opacity 0.7s ease,transform 0.7s ease}
+.t-item.vis{opacity:1;transform:translateX(0)}
+.t-dot{position:absolute;left:-2.5rem;top:0.3rem;width:1.1rem;height:1.1rem;border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 0 2px rgba(192,112,200,0.3)}
+.t-inner{background:rgba(255,255,255,0.65);backdrop-filter:blur(12px);border:1px solid rgba(230,210,225,0.4);border-radius:1.4rem;padding:1.3rem 1.5rem}
+.t-tag{font-family:sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem}
+.t-text{font-size:0.92rem;line-height:1.85;color:var(--t2)}
+.t-text em{color:var(--t1);font-style:italic}
 
-/* =================== STARS SECTION =================== */
-#stars-section{padding:5rem 1.5rem}
-.sec-head{font-family:'Georgia',serif;font-style:italic;font-size:clamp(2.2rem,7vw,3.5rem);text-align:center;margin-bottom:0.5rem}
-.sec-sub{text-align:center;font-family:'Arial',sans-serif;font-size:0.8rem;color:var(--t3);margin-bottom:3rem;letter-spacing:0.05em;text-transform:uppercase}
-
-.stars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;max-width:740px;margin:0 auto}
-
-.s-card{
+/* ===== GARDEN (qualities) ===== */
+#garden{padding:5rem 1.5rem}
+.flower-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;max-width:760px;margin:0 auto}
+.flower-card{
   background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);
-  border-radius:1.6rem;padding:1.6rem;border:1px solid rgba(230,210,220,0.35);
-  box-shadow:0 2px 18px rgba(200,130,160,0.05);
-  opacity:0;transform:translateY(32px);transition:opacity 0.75s ease,transform 0.75s ease,box-shadow 0.3s ease;
+  border:1px solid rgba(225,210,220,0.4);border-radius:1.8rem;padding:1.7rem;
+  opacity:0;transform:translateY(28px) scale(0.96);transition:all 0.65s ease;cursor:default
 }
-.s-card.visible{opacity:1;transform:translateY(0)}
-.s-card:hover{transform:translateY(-5px) rotate(-0.3deg);box-shadow:0 12px 32px rgba(200,130,160,0.16)}
-.s-card .icon{font-size:1.8rem;margin-bottom:0.75rem;display:block}
-.s-card p{font-family:'Georgia',serif;font-size:0.9rem;line-height:1.8;color:var(--t2)}
-.s-card.full{grid-column:1/-1;text-align:center}
-.s-card.full p{max-width:500px;margin:0 auto}
+.flower-card.vis{opacity:1;transform:translateY(0) scale(1)}
+.flower-card:hover{transform:translateY(-6px) rotate(-0.4deg) scale(1.01);box-shadow:0 16px 40px rgba(192,112,200,0.15)}
+.flower-card .f-icon{font-size:2rem;margin-bottom:0.8rem;display:block}
+.flower-card .f-label{font-family:sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--a2);margin-bottom:0.4rem}
+.flower-card p{font-size:0.9rem;line-height:1.85;color:var(--t2)}
+.flower-card.wide{grid-column:1/-1}
 
-/* =================== QUOTE =================== */
-#quote-section{padding:4rem 1.5rem}
-.quote-inner{max-width:540px;margin:0 auto;text-align:center}
-.quote-box{
-  background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);
-  border-radius:1.8rem;padding:2.2rem 2rem;
-  border:1px solid rgba(200,160,200,0.3);
-  position:relative;
+/* ===== LOVE NOTES ===== */
+#lovenotes{padding:4rem 1.5rem}
+.notes-inner{max-width:520px;margin:0 auto;text-align:center}
+.note-btn{
+  font-family:sans-serif;font-weight:700;font-size:0.88rem;padding:0.95rem 2.2rem;
+  border-radius:999px;cursor:pointer;transition:all 0.3s ease;
+  background:linear-gradient(135deg,rgba(240,128,149,0.15),rgba(184,106,192,0.15));
+  border:1.5px solid rgba(184,106,192,0.3);color:#9040a8;
+  display:block;margin:1.5rem auto;
 }
-.quote-box::before{content:'\201C';font-family:'Georgia',serif;font-size:6rem;color:rgba(232,99,124,0.12);position:absolute;top:-10px;left:16px;line-height:1;pointer-events:none}
-.q-text{font-family:'Georgia',serif;font-style:italic;font-size:1.05rem;line-height:1.85;color:var(--t2);position:relative;z-index:1}
-.q-attr{font-family:'Arial',sans-serif;font-size:0.78rem;color:var(--t3);margin-top:1rem;letter-spacing:0.05em}
-
-/* =================== COMFORT =================== */
-#comfort-section{padding:5rem 1.5rem}
-.comfort-inner{max-width:440px;margin:0 auto;text-align:center}
-.comfort-btn{
-  font-family:'Arial',sans-serif;font-weight:700;font-size:0.88rem;
-  padding:1rem 2.2rem;border-radius:999px;
-  border:1.5px solid rgba(201,123,212,0.35);background:rgba(240,232,255,0.5);color:#8840b0;
-  cursor:pointer;transition:all 0.3s ease;backdrop-filter:blur(8px);margin-bottom:2rem;
-  display:block;width:fit-content;margin-left:auto;margin-right:auto;
+.note-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(184,106,192,0.2);background:linear-gradient(135deg,rgba(240,128,149,0.25),rgba(184,106,192,0.25))}
+.note-area{min-height:90px;display:flex;align-items:center;justify-content:center;margin-top:0.5rem}
+.note-msg{
+  background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);
+  border:1px solid rgba(225,205,230,0.5);border-radius:1.6rem;
+  padding:1.3rem 1.8rem;font-style:italic;font-size:0.97rem;color:var(--t2);line-height:1.8;
+  animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both
 }
-.comfort-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(201,123,212,0.22);background:rgba(240,232,255,0.7)}
-.comfort-area{min-height:90px;display:flex;align-items:center;justify-content:center}
-.c-msg{
-  background:rgba(255,255,255,0.65);backdrop-filter:blur(10px);
-  border:1px solid rgba(230,210,225,0.4);border-radius:1.5rem;
-  padding:1.2rem 1.6rem;font-family:'Georgia',serif;font-style:italic;
-  font-size:0.95rem;color:var(--t2);line-height:1.75;
-  animation:popIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+@keyframes popIn{from{opacity:0;transform:scale(0.78) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ===== HEALING CHECKLIST ===== */
+#checklist{padding:4rem 1.5rem}
+.checklist-inner{max-width:480px;margin:0 auto}
+.check-item{
+  display:flex;align-items:flex-start;gap:1rem;
+  background:rgba(255,255,255,0.6);backdrop-filter:blur(10px);
+  border:1px solid rgba(220,205,225,0.4);border-radius:1.4rem;padding:1.1rem 1.3rem;
+  margin-bottom:0.8rem;cursor:pointer;transition:all 0.3s ease;
+  opacity:0;transform:translateX(20px)
 }
-@keyframes popIn{from{opacity:0;transform:scale(0.82) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.check-item.vis{opacity:1;transform:translateX(0)}
+.check-item:hover{transform:translateX(4px)}
+.check-item.done{background:rgba(200,240,224,0.6);border-color:rgba(93,184,144,0.4)}
+.check-circle{
+  width:1.6rem;height:1.6rem;min-width:1.6rem;border-radius:50%;border:2px solid rgba(184,106,192,0.4);
+  display:flex;align-items:center;justify-content:center;font-size:0.85rem;
+  transition:all 0.35s ease;margin-top:0.1rem
+}
+.check-item.done .check-circle{background:linear-gradient(135deg,#5db890,#3da878);border-color:#5db890;color:#fff}
+.check-text{font-size:0.92rem;color:var(--t2);line-height:1.75}
+.check-text strong{color:var(--t1);font-weight:bold}
 
-/* =================== FOOTER =================== */
-#footer-section{padding:5rem 1.5rem 7rem}
-.footer-inner{max-width:480px;margin:0 auto;text-align:center;opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease}
-.footer-inner.visible{opacity:1;transform:translateY(0)}
-.divider{width:50px;height:1.5px;background:linear-gradient(to right,transparent,#f0c8d8,transparent);margin:0 auto 2.5rem}
-.footer-head{font-family:'Georgia',serif;font-style:italic;font-size:2.2rem;color:var(--t2);margin-bottom:1.3rem}
-.footer-p{font-family:'Georgia',serif;font-size:0.95rem;line-height:1.9;color:var(--t2);margin-bottom:1rem}
-.footer-p em{font-style:italic;color:var(--t1)}
-.footer-credit{font-family:'Arial',sans-serif;font-size:0.74rem;color:var(--t3);letter-spacing:0.06em;margin-top:2rem}
+/* ===== QUOTE ===== */
+#quotebox{padding:4rem 1.5rem}
+.quote-inner{max-width:500px;margin:0 auto;text-align:center}
+.quote-card{
+  background:rgba(255,255,255,0.55);backdrop-filter:blur(14px);
+  border-radius:1.8rem;padding:2.5rem 2.2rem;
+  border:1px solid rgba(210,170,210,0.35);position:relative;overflow:hidden
+}
+.quote-deco{position:absolute;top:-12px;left:14px;font-family:serif;font-size:7rem;color:rgba(224,80,112,0.08);line-height:1;pointer-events:none}
+.q-text{font-style:italic;font-size:1.05rem;line-height:1.9;color:var(--t2);position:relative;z-index:1}
+.q-by{font-family:sans-serif;font-size:0.78rem;color:var(--t3);margin-top:1.1rem;letter-spacing:0.05em}
 
-/* ---- utilities ---- */
+/* ===== FOOTER ===== */
+#footer{padding:5rem 1.5rem 7rem}
+.foot-inner{max-width:480px;margin:0 auto;text-align:center;opacity:0;transform:translateY(28px);transition:all 0.9s ease}
+.foot-inner.vis{opacity:1;transform:translateY(0)}
+.divider-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,#f0c0d0,transparent);margin:0 auto 2.5rem;border-radius:999px}
+.foot-title{font-style:italic;font-size:2.2rem;color:var(--t2);margin-bottom:1.4rem}
+.foot-p{font-size:0.96rem;line-height:1.95;color:var(--t2);margin-bottom:1rem}
+.foot-p em{font-style:italic;color:var(--a1)}
+.foot-glow{font-style:italic;color:var(--a1);font-size:1.05rem;margin-top:1.5rem;line-height:1.9}
+.foot-credit{font-family:sans-serif;font-size:0.73rem;color:var(--t3);letter-spacing:0.07em;margin-top:2.2rem}
+.ornament{text-align:center;font-size:1.1rem;letter-spacing:0.6rem;color:var(--t3);opacity:0.35;margin:0.6rem 0}
+
+/* confetti modal */
+#confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+.confetti-p{position:absolute;top:-20px;border-radius:3px;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* util */
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.85s ease,transform 0.85s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-
-/* ---- beautiful ornament line ---- */
-.ornament{text-align:center;font-size:1.1rem;letter-spacing:0.6rem;color:var(--t3);opacity:0.4;margin:0.5rem 0}
+.fade-up.vis{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- animated bg orbs -->
-<div class="bg-wrap" id="bgWrap"></div>
-
-<!-- floating emojis -->
+<div id="confetti-wrap"></div>
 <div class="floaters" id="floaters"></div>
 
-<!-- ============ LANDING ============ -->
-<section id="landing">
-  <div class="badge"><span class="ping"></span>online · far away · always in your corner</div>
-
-  <span class="crown">👑</span>
-
-  <h1 class="landing-title">hey Noor…</h1>
-
-  <p class="landing-sub">
-    i built this because some things are too important<br/>to fit inside a message
-  </p>
-
-  <p class="landing-tiny">this whole thing is just for you 🌸</p>
-
-  <button class="open-btn" id="openBtn">open when you need to feel loved ✨</button>
-
-  <div class="scroll-arrow">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"/>
-    </svg>
+<!-- HERO -->
+<section id="hero">
+  <div class="pill"><span class="pulse-dot"></span>welcome home · you made it · we're so proud</div>
+  <span class="big-emoji">🌸</span>
+  <h1 class="hero-title">
+    Welcome home,
+    <span class="hero-name">Ria.</span>
+  </h1>
+  <p class="hero-sub">you just did one of the hardest things.<br/>now it's time to rest, heal, and be loved.</p>
+  <div class="btn-row">
+    <button class="cta-btn cta-primary" id="openBtn">open something for you 💛</button>
+    <button class="cta-btn cta-secondary" id="burstBtn">celebrate with me 🎉</button>
+  </div>
+  <div class="scroll-hint">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 </section>
 
-<!-- ============ LETTER ============ -->
-<section id="letter-section">
-  <div class="letter-wrap" id="letterWrap">
-    <div class="letter-card">
-
-      <p class="letter-head">a letter that's been sitting in my heart…</p>
-
-      <p class="letter-p">
-        okay so i've been thinking about how to say this properly, and the truth is — there's no clean way to say it, so i'll just say it plainly: <em>you matter to me. a lot. more than i probably say out loud.</em> and i think you deserve to hear that in full, properly, in a way that's more than just a quick message between everything else.
-      </p>
-
-      <p class="letter-p">
-        the distance is real — i know that. you're far, and sometimes that gap between us feels loud. but here's the thing about you, Noor: you make the distance feel like nothing. genuinely nothing. you're the kind of person i could be continents away from and still feel like you're right here. not everyone does that. you do.
-      </p>
-
-      <p class="letter-p">
-        i think about the things you've carried — quietly, on your own, without making noise about it. you've been through heavy things and you still show up soft. still kind. still you. that takes so much more than people realize. and i want you to know, i noticed. even across the miles, i noticed. and i was rooting for you every single time.
-      </p>
-
-      <p class="letter-p">
-        you are someone's <em>favourite person</em>. not as a compliment thrown around, but the real kind — the "i light up a little when i see your name" kind. the "i genuinely want good things for you" kind. that's how you feel to me, and i don't think i've said it enough.
-      </p>
-
-      <p class="letter-p">
-        so here it is, officially: you are cared for. you are thought about. you are loved — across whatever timezone, whatever distance, whatever the world throws between us. none of that changes anything.
-      </p>
-
-      <p class="letter-p">
-        you're my princess and that's final and i will not be taking questions. 💛
-      </p>
-
-      <div class="deco-hearts">♡ ♡ ♡</div>
-
-      <p class="letter-sign">— from the one who's genuinely so glad you're in their life</p>
-      <p class="letter-note">(take all the time you need with this. no rush.)</p>
-
+<!-- WELCOME LETTER -->
+<section id="welcome">
+  <div class="welcome-wrap" id="welcomeWrap">
+    <div class="card">
+      <div class="card-accent"></div>
+      <p class="card-title">a letter, with my whole heart…</p>
+      <p class="card-p">Ria. you came back. and i don't mean that lightly — i mean you pushed through something really, genuinely hard, and you're here on the other side of it. that matters. <em>you</em> matter. more than words properly allow.</p>
+      <p class="card-p">hospitals are cold and unfamiliar and not where any of us want to be. and you went through that. you stayed in it, even when it was scary, even when the hours were long and the walls were too white and everything felt heavy. i thought about you through all of it. i was rooting for you, loudly, in the way that only happens when someone really means it.</p>
+      <p class="card-p">now you're home, and home is exactly where you should be. and i want you to know — recovery isn't a race. there is no timeline you're supposed to keep to. you don't have to bounce back fast. you don't have to be "okay" for anyone. you are allowed to take up <em>all the time</em> you need to feel like yourself again.</p>
+      <p class="card-p">your body did something hard. let it rest. let people take care of you. let yourself be a little soft about it. that's not weakness — that's wisdom. and it's exactly what this moment calls for.</p>
+      <p class="card-p">you are so deeply loved, Ria. <em>deeply</em>. not conditionally, not just when things are good, but completely — through the hospital stays and the hard days and every single in-between. that doesn't change.</p>
+      <p class="card-p">welcome home. <em>properly home.</em> 🌸</p>
+      <div class="hearts">♡ ♡ ♡</div>
+      <p class="card-sig">— from someone who never stopped rooting for you</p>
     </div>
   </div>
 </section>
 
-<!-- ============ STARS ============ -->
-<section id="stars-section">
-  <h2 class="sec-head fade-up" style="color:var(--a2)">reasons you're wonderful</h2>
-  <p class="sec-sub fade-up">a non-exhaustive list — we would be here for a long time otherwise</p>
-
-  <div class="stars-grid">
-    <div class="s-card">
-      <span class="icon">👑</span>
-      <p>you carry a quiet kind of royalty about you — not the loud kind, but the kind that makes people feel safe around you. that's rarer than any crown.</p>
+<!-- HEALING TIMELINE -->
+<section id="timeline">
+  <p class="sec-label">your healing journey</p>
+  <h2 class="sec-title fade-up" style="color:var(--a2)">how far you've come 🌿</h2>
+  <div class="timeline-track">
+    <div class="t-item" data-delay="0">
+      <div class="t-dot" style="background:linear-gradient(135deg,#f08095,#c070c8)"></div>
+      <div class="t-inner">
+        <p class="t-tag" style="color:#e05070">the beginning</p>
+        <p class="t-text">something wasn't right, and you knew it. you made the call. that decision — to ask for help, to go in, to trust — <em>that took courage.</em> it wasn't easy. nothing about it was easy.</p>
+      </div>
     </div>
-
-    <div class="s-card">
-      <span class="icon">🌸</span>
-      <p>the way you stayed kind through hard things — that's not weakness, that's an enormous amount of strength. you came out the other side still soft. i love that about you.</p>
+    <div class="t-item" data-delay="1">
+      <div class="t-dot" style="background:linear-gradient(135deg,#c070c8,#9060d0)"></div>
+      <div class="t-inner">
+        <p class="t-tag" style="color:#9040c0">through it</p>
+        <p class="t-text">the hospital days. the waiting, the uncertainty, the unfamiliar sounds and too-bright lights. you stayed in it anyway. <em>you stayed.</em> that's not small. that's everything.</p>
+      </div>
     </div>
-
-    <div class="s-card">
-      <span class="icon">✨</span>
-      <p>you make people feel seen when you talk to them. not everyone has that. you do, naturally, without even trying. it's a beautiful thing.</p>
+    <div class="t-item" data-delay="2">
+      <div class="t-dot" style="background:linear-gradient(135deg,#9060d0,#5db890)"></div>
+      <div class="t-inner">
+        <p class="t-tag" style="color:#3a9070">turning point</p>
+        <p class="t-text">things shifted. slowly, quietly, but they shifted. your body started doing what bodies do when they're cared for — it started coming back to you. you started coming back to you.</p>
+      </div>
     </div>
-
-    <div class="s-card">
-      <span class="icon">🌙</span>
-      <p>you're the kind of friend who stays. not just when it's fun and easy — properly stays. that is everything. i don't take it lightly.</p>
-    </div>
-
-    <div class="s-card">
-      <span class="icon">💌</span>
-      <p>even from far away, you make people feel close. that's a superpower. it's genuinely rare and it's one of my favourite things about you.</p>
-    </div>
-
-    <div class="s-card">
-      <span class="icon">🌿</span>
-      <p>the way you love the people you love — completely and quietly and without making it a performance — that's exactly the kind of person i want in my corner.</p>
-    </div>
-
-    <div class="s-card full">
-      <span class="icon">💛</span>
-      <p>the miles between us have never made you feel far. <em>that's who you are</em> — the kind of person distance can't dim. and i'm not letting that go.</p>
+    <div class="t-item" data-delay="3">
+      <div class="t-dot" style="background:linear-gradient(135deg,#5db890,#3da878)"></div>
+      <div class="t-inner">
+        <p class="t-tag" style="color:#2a8060">right now ✨</p>
+        <p class="t-text">you're home. you made it here. and the next chapter — the rest, the recovery, the slow beautiful return to yourself — <em>it starts now.</em> and it starts gently.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ QUOTE ============ -->
-<section id="quote-section">
+<!-- GARDEN -->
+<section id="garden">
+  <p class="sec-label">things that are true about you</p>
+  <h2 class="sec-title fade-up" style="color:var(--a1)">your garden of wonderful 🌷</h2>
+  <div class="flower-grid">
+    <div class="flower-card">
+      <span class="f-icon">💪</span>
+      <p class="f-label">quietly strong</p>
+      <p>you don't make noise about what you carry. you just carry it — and keep going. that kind of strength doesn't get enough credit, but i see it.</p>
+    </div>
+    <div class="flower-card">
+      <span class="f-icon">🌸</span>
+      <p class="f-label">soft-hearted</p>
+      <p>through everything, you came out still gentle. still warm. that's not something everyone manages. it's one of my favourite things about you.</p>
+    </div>
+    <div class="flower-card">
+      <span class="f-icon">✨</span>
+      <p class="f-label">someone's light</p>
+      <p>people feel better when you're around. that's not coincidence — that's who you are. a light-bringer. and the world has missed yours.</p>
+    </div>
+    <div class="flower-card">
+      <span class="f-icon">🌿</span>
+      <p class="f-label">a fighter</p>
+      <p>you literally just came home from a hospital stay. you went through it, and you came out. there's no other word for that except brave.</p>
+    </div>
+    <div class="flower-card">
+      <span class="f-icon">💛</span>
+      <p class="f-label">deeply loved</p>
+      <p>you are thought about. you are cared for. you matter to people in a real, lasting way — not just when things are easy. always.</p>
+    </div>
+    <div class="flower-card">
+      <span class="f-icon">🌙</span>
+      <p class="f-label">resilient</p>
+      <p>this isn't the first hard thing, and you've gotten through each one still yourself. that resilience is quiet and real and remarkable.</p>
+    </div>
+    <div class="flower-card wide">
+      <span class="f-icon">🌺</span>
+      <p class="f-label">exactly enough</p>
+      <p>you don't have to earn rest. you don't have to justify softness. you came home — that's enough. you existing is enough. just be, Ria. just be.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOVE NOTES -->
+<section id="lovenotes">
+  <div class="notes-inner">
+    <p class="sec-label">for when you need it</p>
+    <h2 class="sec-title fade-up" style="color:var(--a1)">a reminder, always 💌</h2>
+    <p class="fade-up" style="font-size:0.9rem;color:var(--t3);margin-bottom:0.5rem">tap whenever you need a little love sent your way</p>
+    <button class="note-btn fade-up" id="noteBtn">send me a reminder 🤍</button>
+    <div class="note-area" id="noteArea"></div>
+  </div>
+</section>
+
+<!-- RECOVERY CHECKLIST -->
+<section id="checklist">
+  <div class="checklist-inner">
+    <p class="sec-label">gentle reminders</p>
+    <h2 class="sec-title fade-up" style="color:var(--a3)">recovery rituals 🌿</h2>
+    <p class="fade-up" style="font-size:0.9rem;color:var(--t3);text-align:center;margin-bottom:2rem">tick these off as you go — no rush, ever</p>
+    <div id="checkList"></div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section id="quotebox">
   <div class="quote-inner fade-up">
-    <div class="quote-box">
-      <p class="q-text">
-        you don't have to be okay all the time. you don't have to be strong all the time. you've already been so strong, for so long. some days it's enough to just be here — and you being here is enough.
-      </p>
-      <p class="q-attr">— something i mean with my whole heart</p>
+    <div class="quote-card">
+      <span class="quote-deco">"</span>
+      <p class="q-text">healing is not linear. it circles back, it pauses, it moves in its own quiet way. you don't have to force it. some days rest is the bravest thing you can do — and on those days, rest is everything.</p>
+      <p class="q-by">— something i mean with my whole heart</p>
     </div>
   </div>
 </section>
 
-<!-- ============ COMFORT ============ -->
-<section id="comfort-section">
-  <div class="comfort-inner">
-    <h2 class="sec-head fade-up" style="color:var(--a1)">for the heavy days</h2>
-    <p class="sec-sub fade-up">tap this whenever things feel too much. i mean it.</p>
-
-    <button class="comfort-btn fade-up" id="comfortBtn">tap when you need a reminder 🤍</button>
-    <div class="comfort-area" id="comfortArea"></div>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
-<section id="footer-section">
-  <div class="footer-inner" id="footerInner">
-    <div class="divider"></div>
-    <p class="footer-head">one last thing, Noor</p>
-    <p class="footer-p">
-      you've carried quiet things alone that you really didn't have to carry alone.
-      the heavy stuff, the uncertain stuff, the stuff you smile through —
-      i see it. i've always seen it.
-    </p>
-    <p class="footer-p">
-      you don't owe anyone a perfect version of yourself.
-      not today, not on the hard days, <em>not ever.</em>
-    </p>
-    <p class="footer-p">
-      i'm here — properly, fully here — across every mile, every timezone, every moment.
-      that part doesn't change. it just doesn't.
-    </p>
-    <p class="footer-p" style="font-style:italic;color:var(--a1)">
-      you're cared for. you're loved. you're my princess. 💛
-    </p>
+<!-- FOOTER -->
+<section id="footer">
+  <div class="foot-inner" id="footInner">
+    <div class="divider-line"></div>
+    <p class="foot-title">one last thing, Ria</p>
+    <p class="foot-p">you did it. you went through something hard, and you came home. and home is safe, and warm, and full of people who are so glad you're back in it.</p>
+    <p class="foot-p">don't rush yourself. don't measure recovery by someone else's timeline. your body knows. your heart knows. trust them both.</p>
+    <p class="foot-p">the world is softer with you in it. <em>you belong in it.</em></p>
+    <p class="foot-glow">welcome home, Ria. rest now. you've earned it. 💛🌸</p>
     <div class="ornament">✦ ✦ ✦</div>
-    <p class="footer-credit">— made with real feelings, zero regrets</p>
+    <p class="foot-credit">— made with real love, zero regrets, and all the warmth in the world</p>
   </div>
 </section>
 
 <script>
-// ---- comfort messages ----
-const msgs=[
-  "you are so cared for. even from miles away. especially from miles away.",
-  "the distance is real but so is every single bit of what i feel for you.",
-  "you don't have to hold everything alone. i'm here. i'm properly here.",
-  "you are someone's favourite person. not a metaphor. actually true.",
-  "on the days things feel heavy — you're allowed to feel that. and you're still loved through it.",
-  "you showed up soft through hard things. that took so much. i see it.",
-  "one day the distance will close and it'll be the best day. until then — i'm still here.",
-  "you make being far away feel like nothing. that's not nothing. that's everything.",
-  "you are my princess and that's final 👑 no debates.",
-  "just you existing is enough. you don't have to do anything extra to deserve good things.",
+// -- blob bg --
+const blobColors=['#ffb3c1','#e8d5f5','#c8f0e0','#ffd6ba','#ffe08a'];
+const blobData=[
+  {x:'10%',y:'8%',s:'380px',dx:'25px',dy:'30px',ds:'1.08',d:'20s'},
+  {x:'72%',y:'5%',s:'320px',dx:'-20px',dy:'22px',ds:'0.92',d:'24s'},
+  {x:'60%',y:'68%',s:'430px',dx:'-25px',dy:'-18px',ds:'1.06',d:'22s'},
+  {x:'3%',y:'65%',s:'310px',dx:'18px',dy:'-22px',ds:'0.96',d:'18s'},
+  {x:'40%',y:'42%',s:'280px',dx:'12px',dy:'15px',ds:'1.04',d:'28s'},
 ];
-let lastIdx=-1;
-
-// ---- stars bg ----
-const bgWrap=document.getElementById('bgWrap');
-const orbData=[
-  {x:'15%',y:'12%',size:'380px',color:'#ffe4ef',dx:'20px',dy:'25px',ds:'1.08',dur:'18s'},
-  {x:'75%',y:'8%',size:'320px',color:'#f0e8ff',dx:'-18px',dy:'20px',ds:'0.94',dur:'22s'},
-  {x:'65%',y:'72%',size:'420px',color:'#e0f0ff',dx:'-22px',dy:'-18px',ds:'1.06',dur:'20s'},
-  {x:'5%',y:'70%',size:'300px',color:'#e2f8f0',dx:'15px',dy:'-20px',ds:'0.96',dur:'16s'},
-  {x:'45%',y:'45%',size:'260px',color:'#fff0e6',dx:'10px',dy:'12px',ds:'1.04',dur:'25s'},
-];
-orbData.forEach(o=>{
+blobData.forEach((b,i)=>{
   const el=document.createElement('div');
-  el.className='bg-orb';
-  Object.assign(el.style,{left:o.x,top:o.y,width:o.size,height:o.size,background:o.color,'--dx':o.dx,'--dy':o.dy,'--ds':o.ds,animationDuration:o.dur,animationDelay:`-${Math.random()*10}s`});
-  bgWrap.appendChild(el);
+  el.className='bg-blob';
+  Object.assign(el.style,{left:b.x,top:b.y,width:b.s,height:b.s,background:blobColors[i],'--dx':b.dx,'--dy':b.dy,'--ds':b.ds,animationDuration:b.d,animationDelay:`-${Math.random()*12}s`});
+  document.body.appendChild(el);
 });
 
-// ---- stars ----
-for(let i=0;i<55;i++){
-  const s=document.createElement('div');
-  s.className='star';
-  const sz=1+Math.random()*2.5;
-  Object.assign(s.style,{
-    left:Math.random()*100+'%',top:Math.random()*100+'%',
-    width:sz+'px',height:sz+'px',
-    background:['#ffd0e0','#e0c8ff','#c8e8ff','#c8f0e0','#ffe0b0'][Math.floor(Math.random()*5)],
-    animationDuration:(1.5+Math.random()*3)+'s',animationDelay:Math.random()*4+'s',
-    position:'fixed',zIndex:1,pointerEvents:'none',borderRadius:'50%',
-  });
+// -- sparkles --
+for(let i=0;i<60;i++){
+  const s=document.createElement('div');s.className='sparkle';
+  const sz=1.5+Math.random()*3;const colors=['#ffd0e0','#e0c8ff','#c8ffe8','#ffe0b0','#d0e8ff'];
+  Object.assign(s.style,{position:'fixed',left:Math.random()*100+'%',top:Math.random()*100+'%',width:sz+'px',height:sz+'px',borderRadius:'50%',background:colors[i%5],animationDuration:(1.2+Math.random()*3.5)+'s',animationDelay:Math.random()*5+'s',zIndex:1,pointerEvents:'none'});
   document.body.appendChild(s);
 }
 
-// ---- floaters ----
-const emojis=['💛','🌸','👑','✨','💌','🌿','🤍','💗','🌙','🫶','⭐','🌺'];
+// -- floaters --
+const fems=['🌸','💛','✨','🌷','💗','🌿','🤍','⭐','🌺','💌','🫶','🌙'];
 const fc=document.getElementById('floaters');
-
 function spawnFloat(burst=false){
-  const el=document.createElement('span');
-  el.className='float-el';
-  el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-  el.style.left=(burst?window.innerWidth/2+(Math.random()-0.5)*300:Math.random()*window.innerWidth)+'px';
-  el.style.bottom=burst?'28%':'-20px';
-  el.style.fontSize=(0.8+Math.random()*1.1)+'rem';
-  const dur=5+Math.random()*5;
-  el.style.animationDuration=dur+'s';
-  fc.appendChild(el);
-  setTimeout(()=>el.remove(),dur*1000);
+  const el=document.createElement('span');el.className='float-el';
+  el.textContent=fems[Math.floor(Math.random()*fems.length)];
+  el.style.left=(burst?window.innerWidth/2+(Math.random()-0.5)*320:Math.random()*window.innerWidth)+'px';
+  el.style.bottom=burst?'20%':'-20px';
+  el.style.fontSize=(0.7+Math.random()*1.2)+'rem';
+  const dur=4+Math.random()*5;el.style.animationDuration=dur+'s';
+  fc.appendChild(el);setTimeout(()=>el.remove(),dur*1000);
+}
+function burst(n){for(let i=0;i<n;i++)setTimeout(()=>spawnFloat(true),i*100)}
+setInterval(()=>spawnFloat(),2600);
+
+// -- confetti --
+function fireConfetti(){
+  const wrap=document.getElementById('confetti-wrap');
+  const colors=['#f08095','#c070c8','#5db890','#ffe08a','#ffd6ba','#c8f0e0'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');p.className='confetti-p';
+    const sz=6+Math.random()*8;
+    Object.assign(p.style,{
+      width:sz+'px',height:sz+'px',
+      left:Math.random()*100+'vw',background:colors[Math.floor(Math.random()*colors.length)],
+      animationDuration:(2.5+Math.random()*2)+'s',animationDelay:(Math.random()*0.8)+'s',
+      borderRadius:Math.random()>0.5?'50%':'2px'
+    });
+    wrap.appendChild(p);setTimeout(()=>p.remove(),4000);
+  }
 }
 
-function burst(n){for(let i=0;i<n;i++)setTimeout(()=>spawnFloat(true),i*120)}
-setInterval(()=>spawnFloat(),2800);
-
-// ---- open letter ----
+// -- open letter --
 document.getElementById('openBtn').addEventListener('click',()=>{
-  const w=document.getElementById('letterWrap');
-  w.classList.add('open');
-  setTimeout(()=>w.scrollIntoView({behavior:'smooth',block:'center'}),250);
-  burst(12);
+  const w=document.getElementById('welcomeWrap');w.classList.add('open');
+  setTimeout(()=>w.scrollIntoView({behavior:'smooth',block:'start'}),280);
+  burst(14);
 });
 
-// ---- comfort ----
-document.getElementById('comfortBtn').addEventListener('click',()=>{
-  let idx;
-  do{idx=Math.floor(Math.random()*msgs.length)}while(idx===lastIdx&&msgs.length>1);
-  lastIdx=idx;
-  document.getElementById('comfortArea').innerHTML=`<div class="c-msg">"${msgs[idx]}"</div>`;
-  burst(6);
+// -- celebrate --
+document.getElementById('burstBtn').addEventListener('click',()=>{fireConfetti();burst(18)});
+
+// -- love notes --
+const notes=[
+  "you are home. that means you made it. and you did — against all the odds of that hard stretch.",
+  "rest is not laziness. rest is the most healing thing you can give yourself right now.",
+  "you are so loved. not because of what you do — just because you are you, Ria.",
+  "your body worked hard to get you here. be gentle with it. be gentle with yourself.",
+  "the hard part is over. what's ahead is softer. you get to take it slow.",
+  "you are someone's favourite call, favourite laugh, favourite person. don't forget that.",
+  "healing happens quietly, even when you can't feel it. trust the process. trust yourself.",
+  "you went through something real. you're allowed to acknowledge that, and be proud of yourself.",
+  "today: just exist. that is enough. tomorrow can wait.",
+  "welcome home, Ria. the world is softer with you in it. 🌸",
+];
+let lastNote=-1;
+document.getElementById('noteBtn').addEventListener('click',()=>{
+  let idx;do{idx=Math.floor(Math.random()*notes.length)}while(idx===lastNote&&notes.length>1);
+  lastNote=idx;
+  document.getElementById('noteArea').innerHTML=`<div class="note-msg">"${notes[idx]}"</div>`;
+  burst(5);
 });
 
-// ---- scroll observer ----
+// -- checklist --
+const checks=[
+  {icon:'💧',label:'Drink some water',desc:'even just a sip. your body is healing and it needs this.'},
+  {icon:'🛌',label:'Rest without guilt',desc:'sleep if you can. lie down if you can\'t. either counts.'},
+  {icon:'🌿',label:'One breath of fresh air',desc:'a window, a door, five minutes outside — whatever feels okay.'},
+  {icon:'🍓',label:'Eat something gentle',desc:'something warm, something soft, something kind to your body.'},
+  {icon:'💌',label:'Let someone love you',desc:'accept the help. let a person do something for you today.'},
+  {icon:'🌸',label:'Say one kind thing to yourself',desc:'out loud, in your head — just one. you\'ve earned it.'},
+];
+const cl=document.getElementById('checkList');
+checks.forEach((c,i)=>{
+  const el=document.createElement('div');
+  el.className='check-item';el.style.transitionDelay=(i*0.1)+'s';
+  el.innerHTML=`<div class="check-circle" id="cc${i}">○</div><div class="check-text"><strong>${c.icon} ${c.label}</strong><br>${c.desc}</div>`;
+  el.addEventListener('click',()=>{
+    const done=el.classList.toggle('done');
+    document.getElementById('cc'+i).textContent=done?'✓':'○';
+    if(done)burst(4);
+  });
+  cl.appendChild(el);
+});
+
+// -- intersection observer --
 const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
 },{threshold:0.1});
-
-document.querySelectorAll('.fade-up,.s-card,.footer-inner').forEach((el,i)=>{
-  if(el.classList.contains('s-card'))el.style.transitionDelay=(i%7*0.09)+'s';
+document.querySelectorAll('.fade-up,.flower-card,.t-item,.check-item,.foot-inner').forEach((el,i)=>{
+  if(el.classList.contains('flower-card'))el.style.transitionDelay=(i%7*0.08)+'s';
   io.observe(el);
 });
 </script>
